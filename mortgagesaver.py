@@ -1,6 +1,5 @@
 import argparse
 import decimal
-from types import NoneType
 
 MONTHS_IN_YEAR:int = 12
 DOLLAR_QUANTIZE = decimal.Decimal('.01')
@@ -64,24 +63,13 @@ class Mortgage:
             yield principle, interest
             balance -= principle
 
-def print_summary(m):
-    print('{0:>25s}:  {1:>12.6f}'.format('Rate', m.rate()))
-    print('{0:>25s}:  {1:>12.6f}'.format('Month Growth', m.month_growth()))
-    print('{0:>25s}:  {1:>12.6f}'.format('APY', m.apy()))
-    print('{0:>25s}:  {1:>12.0f}'.format('Payoff Years', m.loan_years()))
-    print('{0:>25s}:  {1:>12.0f}'.format('Payoff Months', m.loan_months()))
-    print('{0:>25s}:  {1:>12.2f}'.format('Amount', m.amount()))
-    print('{0:>25s}:  {1:>12.2f}'.format('Monthly Payment', m.monthly_payment()))
-    print('{0:>25s}:  {1:>12.2f}'.format('Annual Payment', m.annual_payment()))
-    print('{0:>25s}:  {1:>12.2f}'.format('Total Payout', m.total_payout()))
-
 if __name__ == '__main__':
     parser = argparse.ArgumentParser("MortgageSaver", description="This program will calculate the difference between two interest rates and the amount of time it will take to payoff a refinance if closing costs are provided.")
 
     parser.add_argument("amount", help="The amount of the loan.", type=float)
     parser.add_argument("initial", help="The interest rate before refinancing.", type=float)
     parser.add_argument("final", help="The interest rate after refinancing.", type=float)
-    parser.add_argument("--refi", help="The costs to complete the refinance.", type=float)
+    parser.add_argument("--refi", help="The costs to complete the refinance.", type=float, default=None)
     parser.add_argument("--term", help="The total length of the load. Defaults to 30 years or 360 months.", type=int, default=30)
 
     args = parser.parse_args()
